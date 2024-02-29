@@ -1,66 +1,62 @@
-import java.lang.reflect.ParameterizedType;
+public class Order {
 
-public class Order{
     private String item;
     private int quantity;
     private double unitPrice;
     private double totalAmount;
     private PaymentMode paymentMode; //interface
 
-    public Order{
+    public Order(){
         //default
     }
 
-    public Order(String item, int quantity, double unitPrice){
+    public Order(String item, double unitPrice, int quantity, PaymentMode paymentMode) {
         this.item = item;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
+        this.paymentMode = paymentMode;
+        this.totalAmount = totalAmount();
     }
 
     //setters
-    public void setItem (String item){
+    public void setItem(String item) {
         this.item = item;
     }
-
-    public void setQuantity(int quantity){
-        this.quantity = quantity;
-    }
-
-    public void setUnitPrice(double unitPrice){
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
-
-    public void setTotalAmount(double totalAmount){
-        this.totalAmount = totalAmount;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
-
-    public void setPaymentMode(PaymentMode paymentMode){
+    public void setPaymentMode(PaymentMode paymentMode) {
         this.paymentMode = paymentMode;
+    }
+    public void setTotalAmount() {
+        this.totalAmount = totalAmount();
     }
 
     //getters
-    public String getItem(){
+    public String getItem() {
         return item;
     }
-
-    public int getQuantity(){
+    public int getQuantity() {
         return quantity;
     }
-
-    public double getUnitPrice(){
+    public double getUnitPrice() {
         return unitPrice;
     }
-
-    public double getTotalAmount(){
+    public PaymentMode getPaymentMode() {
+        return paymentMode;
+    }
+    public double getTotalAmount() {
         return totalAmount;
     }
 
-    public PaymentMode getPaymentMode(){
-        return paymentMode;
-    }
-
-    //compute total amount
+    //to calculate total amount
     public double totalAmount(){
-
+        double discount = this.unitPrice*this.paymentMode.determineDiscountRate();
+        double amount = this.unitPrice - discount;
+        double total = amount*this.quantity;
+        return total;
     }
 }
